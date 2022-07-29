@@ -29,6 +29,13 @@
 			width: 70px;
 			height: 75px;	
 		}
+
+		.misil {
+			position: absolute;
+			background-color: yellow;
+			width: 2px;
+			height: 10px;
+		}
 		
 	</style>
 
@@ -38,6 +45,7 @@
 	<div id="oceano"> 
 		<div id="jugadores"></div>
 		<div id="enemigos"></div>
+		<div id="misiles"></div>
 	</div>
 		
 
@@ -60,15 +68,12 @@
 
 			]
 
+			var misiles = [];
+
 			function dibujar_jugador(){
-
 				content = "<div class= 'jugador' style='left:"+jugador.left+"px; top:"+jugador.top+"px'></div>"
-
-				document.getElementById('jugadores').innerHTML = content;
-				
+				document.getElementById('jugadores').innerHTML = content;				
 			}
-
-				dibujar_jugador();
 
 			
 			function dibujar_enemigo(){
@@ -76,14 +81,31 @@
 				console.log(enemigos)
 				for(index=0; index<enemigos.length; index++){
 					content += "<div class= 'enemigo' style='left:"+enemigos[index].left+"px; top:"+enemigos[index].top+"px'></div>"
-
 				}
-				document.getElementById('enemigos').innerHTML = content;
-				
+				document.getElementById('enemigos').innerHTML = content;				
 			}
 
-			dibujar_enemigo();
+			function dibujar_misil(){
+				content = "";
+				for(index=0; index<misiles.length; index++){
+					content += "<div class='misil' style='left:"+misiles[index].left+"px; top:"+misiles[index].top+"px'></div>"
+				}
+				document.getElementById('misiles').innerHTML = content;
 
+			}
+			
+
+			function mover_enemigos(){
+				for(index=0; index<enemigos.length; index++){
+					enemigos[index].top = enemigos[index].top + 5;
+				}
+			}
+
+			function mover_misiles(){
+				for(index=0; index<misiles.length; index++){
+					misiles[index].top = misiles[index].top - 60;
+				}
+			}
 
 
 
@@ -100,10 +122,29 @@
 				if(e.keyCode == 40 && jugador.top <= 600){ // arriba
 					jugador.top = jugador.top +10;
 				}
-				dibujar_jugador();
+				if(e.keyCode == 32 ) { // fuego
+					misiles.push({left: (jugador.left+34), top: (jugador.top-8)})
+					dibujar_misil();
+				}
+				console.log(misiles);
+				
 
 			}
 
+			function loop_juego(){
+				console.log("Funciona!")
+				
+				dibujar_jugador();
+				mover_enemigos();
+				dibujar_enemigo();
+				mover_misiles()
+				dibujar_misil();
+
+				setTimeout(loop_juego, 500);
+			}
+
+			
+			loop_juego();
 
 
 
