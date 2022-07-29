@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+	<!--Comienzo de JavaScript-->
+
+	<style type="text/css">
+		
+		#oceano {
+			background-image: url("ocean2.jpg");
+			width: 900px;
+			height: 700px;
+			
+		}
+
+		.jugador{
+			position: absolute;
+			background-image: url("player1.png");
+			width: 70px;
+			height: 75px;			
+		}
+		
+		.enemigo{
+			position: absolute;
+			background-image: url("enemy2.png");
+			width: 70px;
+			height: 75px;	
+		}
+		
+	</style>
+
+		<!--HTML-->
+
+
+	<div id="oceano"> 
+		<div id="jugadores"></div>
+		<div id="enemigos"></div>
+	</div>
+		
+
+	<!--Comienzo de JavaScript-->
+		<script type="text/javascript">
+
+			var jugador = {
+				left:450,
+				top:620
+			};
+
+			var enemigos = [
+			{left:100, top:50},
+			{left:200, top:250},
+			{left:300, top:150},
+			{left:400, top:350},
+			{left:500, top:150},
+			{left:600, top:250},
+			{left:700, top:50}
+
+			]
+
+			function dibujar_jugador(){
+
+				content = "<div class= 'jugador' style='left:"+jugador.left+"px; top:"+jugador.top+"px'></div>"
+
+				document.getElementById('jugadores').innerHTML = content;
+				
+			}
+
+				dibujar_jugador();
+
+			
+			function dibujar_enemigo(){
+				content = "";
+				console.log(enemigos)
+				for(index=0; index<enemigos.length; index++){
+					content += "<div class= 'enemigo' style='left:"+enemigos[index].left+"px; top:"+enemigos[index].top+"px'></div>"
+
+				}
+				document.getElementById('enemigos').innerHTML = content;
+				
+			}
+
+			dibujar_enemigo();
+
+
+
+
+			document.onkeydown = function(e){
+				if(e.keyCode == 37 && jugador.left > 0){ // izquierda
+					jugador.left = jugador.left -10;
+				}
+				if(e.keyCode == 39 && jugador.left <= 830){ // derecha
+					jugador.left = jugador.left +10;
+				}
+				if(e.keyCode == 38 && jugador.top > 500){ // abajo
+					jugador.top = jugador.top -10;
+				}
+				if(e.keyCode == 40 && jugador.top <= 600){ // arriba
+					jugador.top = jugador.top +10;
+				}
+				dibujar_jugador();
+
+			}
+
+
+
+
+
+			
+		</script>
+
+
+	
+
+
+
+
+
+
+
+</body>
+</html>
